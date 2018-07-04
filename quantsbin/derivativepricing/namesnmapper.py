@@ -37,14 +37,14 @@ class UnderlyingParameters(Enum):
 
 
 class RiskParameter(Enum):
-    DELTA = 'Delta'
-    GAMMA = 'Gamma'
-    THETA = 'Theta'
-    VEGA = 'Vega'
-    RHO = 'Rho'
-    PHI = 'Phi'
-    RHO_FOREIGN = 'Rho_foreign'
-    RHO_CONV = 'Rho_conv_yield'
+    DELTA = 'delta'
+    GAMMA = 'gamma'
+    THETA = 'theta'
+    VEGA = 'vega'
+    RHO = 'rho'
+    PHI = 'phi'
+    RHO_FOREIGN = 'rho_foreign'
+    RHO_CONV = 'rho_conv_yield'
 
 
 class VanillaOptionType(Enum):

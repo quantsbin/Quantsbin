@@ -47,7 +47,7 @@ eqOption1_pricer = eqOption1.engine(model="BSM", spot0=100, pricing_date='201805
                                     rf_rate=.05, pv_div=0.0,
                                     yield_div=0.0, seed=12)
 
-print(eqOption1_pricer.pnl_attribution())
+print(eqOption1_pricer.risk_parameters_num())
 
 # payoff_plt = qbdp.Plotting(eqOption1, "payoff", x_axis_range=[0, 200]).line_plot()
 
