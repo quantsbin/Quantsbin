@@ -5,11 +5,17 @@
 
 from distutils.core import setup
 
+try:
+    with open('README.md') as file:
+        long_description=file.read()
+except:
+    long_description='Quantitative Finance Tools'
+
 setup(
     name='Quantsbin',
-    version='0.1.0',
+    version='0.0.1',
     description='Quantitative Finance Tools',
-    long_description=open('README.md').read(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     author='Quantsbin',
     author_email='contactus@quantsbin.com',
