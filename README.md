@@ -2,11 +2,11 @@
 
 Open source library for finance.
 
-Quantsbin 0.0.1, which started as a weekend project is currently in its initial phase and
+Quantsbin 1.0, which started as a weekend project is currently in its initial phase and
 incorporates tools for pricing and plotting of vanilla option prices, greeks and various other analysis around them.
 We are working on optimising calculations and expanding the scope of library in multiple directions for future releases.
 
-## Quantsbin 0.0.1 includes
+## Quantsbin 1.0 includes
    1. Option payoff, premium and greeks calculation for vanilla options on Equity, FX, Commodity and Futures.
    2. Capability to calculate greeks numerically for all models and also analytically for Black Scholes Model.
    3. Price vanilla options with European expiry using BSM, Binomial tree and MonteCarlo with option to 
@@ -24,7 +24,7 @@ We are working on optimising calculations and expanding the scope of library in 
 [MIT LICENCE](https://github.com/quantsbin/Quantsbin/blob/master/LICENSE/)
 
 ## Dependencies and Installation details
-    scipy==1.1.0  
+    scipy==1.0
     pandas==0.23.0  
     matplotlib==2.2.2 
     numpy==1.14.3       
@@ -48,4 +48,4 @@ For collaboration and suggestion reach us at [Quantsbin](http://www.quantsbin.co
 Refer to our [Tutorial](http://www.quantsbin.com/tutorial/) page
 
 ## Note
-For Quantsbin 0.0.1 testing and documentation are still WIP.
+For Quantsbin 1.0 testing and documentation are still WIP.

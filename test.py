@@ -4,6 +4,7 @@
 """
 import unittest
 import quantsbin.derivativepricing as qbdp
+import pypandoc
 
 from quantsbin.derivativepricing.namesnmapper import VanillaOptionType, ExpiryType, UdlType, OBJECT_MODEL, DerivativeType
 

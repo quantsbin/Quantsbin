@@ -22,6 +22,7 @@ comOption1 = qbdp.ComOption(option_type='Put', strike=95, expiry_date='20190630'
 comOption2 = qbdp.ComOption(option_type='Call', strike=105, expiry_date='20190630', expiry_type='American')
 
 """Creating list of all defined option for consolidate testing"""
+
 # option_list = [eqOption1, eqOption2, fxOption1, fxOption2, futOption1, futOption2, comOption1, comOption2]
 #
 # # print(eqOption2.payoff(0))
@@ -42,9 +43,11 @@ comOption2 = qbdp.ComOption(option_type='Call', strike=105, expiry_date='2019063
 # for option in option_list:
 #     print("Models available for pricing {} option are {}".format(option.undl, option.list_models()))
 
-# eqOption1_pricer = eqOption1.engine(model="BSM", spot0=100, pricing_date='20180531', volatility=.25,
-#                                     rf_rate=.05, pv_div=0.0,
-#                                     yield_div=0.0, seed=12)
+eqOption1_pricer = eqOption1.engine(model="BSM", spot0=100, pricing_date='20180531', volatility=.25,
+                                    rf_rate=.05, pv_div=0.0,
+                                    yield_div=0.0, seed=12)
+
+print(eqOption1_pricer.pnl_attribution())
 
 # payoff_plt = qbdp.Plotting(eqOption1, "payoff", x_axis_range=[0, 200]).line_plot()
 

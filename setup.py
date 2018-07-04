@@ -2,21 +2,28 @@
     developed by Quantsbin - Jun'18
 
 """
-
+import setuptools
 from distutils.core import setup
 
+
+# try:
+#     with open('README.md') as file:
+#         long_description=file.read()
+# except:
+#     long_description='Quantitative Finance Tools'
+
 try:
-    with open('README.md') as file:
-        long_description=file.read()
-except:
-    long_description='Quantitative Finance Tools'
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except(IOError, ImportError):
+    long_description = open('README.md').read()
 
 setup(
     name='Quantsbin',
-    version='0.0.1',
+    version='1.0',
     description='Quantitative Finance Tools',
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
     author='Quantsbin',
     author_email='contactus@quantsbin.com',
     url='https://github.com/quantsbin/Quantsbin',

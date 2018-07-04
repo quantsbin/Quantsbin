@@ -31,11 +31,11 @@ class Model(metaclass=ABCMeta):
         pass
 
     @property
-    def cnv_yield(self):
+    def _cnv_yield(self):
         if self.instrument.undl == UdlType.FUTURES.value:
             return self.rf_rate
         else:
-            return self._cnv_yield
+            return self.cnv_yield
 
     @property
     def pricing_date(self):
@@ -76,7 +76,7 @@ class BSMFramework(Model):
         self.instrument = instrument
         self.spot0 = spot0 or .00001
         self.rf_rate = rf_rate or 0
-        self._cnv_yield = cnv_yield or 0
+        self.cnv_yield = cnv_yield or 0
         self.cost_yield = cost_yield or 0
         self.pv_cnv = pv_cnv or 0
         self.pv_cost = pv_cost or 0
@@ -90,7 +90,7 @@ class BSMFramework(Model):
     @property
     def d1(self):
         return (log(self.adj_spot0 / self.instrument.strike) + (
-            self.rf_rate - self.cnv_yield + self.cost_yield + 0.5 * (self.volatility ** 2)) * self.maturity) \
+            self.rf_rate - self._cnv_yield + self.cost_yield + 0.5 * (self.volatility ** 2)) * self.maturity) \
                / (self.volatility * sqrt(self.maturity))
 
     @property
@@ -103,7 +103,7 @@ class BSMFramework(Model):
 
     @property
     def adj_discount_factor(self):
-        return e ** (-1 * (self.cnv_yield - self.cost_yield) * self.maturity)
+        return e ** (-1 * (self._cnv_yield - self.cost_yield) * self.maturity)
 
     @property
     def option_flag(self):
@@ -143,7 +143,7 @@ class BSMFramework(Model):
     def theta(self):
         return ((-1 * norm.pdf(self.d1) * self.volatility * self.adj_discount_factor * self.adj_spot0 / (
             2 * sqrt(self.maturity))) +
-                (self.option_flag * (self.cnv_yield - self.cost_yield) * self.adj_spot0
+                (self.option_flag * (self._cnv_yield - self.cost_yield) * self.adj_spot0
                  * norm.cdf(self.option_flag * self.d1) * self.adj_discount_factor) -
                 (self.option_flag * self.rf_rate * self.instrument.strike * self.discount_factor
                  * norm.cdf(self.option_flag * self.d2))) / 365
@@ -167,7 +167,7 @@ class BSMFramework(Model):
             return val - premium
 
         try:
-            return optimize.bisect(objective_func, 0.5, xtol=0.00005)
+            return optimize.bisect(objective_func, a=0.001, b=0.999, xtol=0.00005)
         except ValueError:
             raise ValueError("Unable to converge to implied volatility")
 
@@ -284,7 +284,7 @@ class MonteCarloGBM(Model):
         self.instrument = instrument
         self.spot0 = spot0 or .0001
         self.rf_rate = rf_rate or 0
-        self._cnv_yield = cnv_yield or 0
+        self.cnv_yield = cnv_yield or 0
         self.cost_yield = cost_yield or 0
         self.volatility = volatility or 0.10
         self._pricing_date = dt.strptime(pricing_date, '%Y%m%d')
@@ -301,7 +301,7 @@ class MonteCarloGBM(Model):
 
     @property
     def drift(self):
-        return self.rf_rate + self.cost_yield - self.cnv_yield
+        return self.rf_rate + self.cost_yield - self._cnv_yield
 
     @property
     def no_of_path(self):
@@ -399,7 +399,7 @@ class BinomialModel(Model):
         self.instrument = instrument
         self.spot0 = spot0 or 0.0001
         self.rf_rate = rf_rate or 0
-        self._cnv_yield = cnv_yield or 0
+        self.cnv_yield = cnv_yield or 0
         self.cost_yield = cost_yield or 0
         self.volatility = volatility or 0.10
         self._pricing_date = dt.strptime(pricing_date, '%Y%m%d')
@@ -409,7 +409,7 @@ class BinomialModel(Model):
 
     @property
     def drift(self):
-        return self.rf_rate + self.cost_yield - self.cnv_yield
+        return self.rf_rate + self.cost_yield - self._cnv_yield
 
     @property
     def div_processed(self):
