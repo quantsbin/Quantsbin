@@ -20,6 +20,7 @@ VANILLA_OBJECT_MAPPER = {
     UdlType.COMMODITY.value: inst.ComOption
 }
 
+
 def p_map(func, parameter):
     if platform.system() == "Windows":
         return map(func, parameter)
