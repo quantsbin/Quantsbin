@@ -21,16 +21,16 @@ class NumericalGreeks:
         delta_cost_yield = (Float < 1). Change in cost yield e.g. 0.2
     """
 
-    def __init__(self, model_class, delta_spot=None, delta_vol=None, delta_rf_rate=None,
-                 delta_time=None, delta_conv_yield=None, delta_cost_yield=None, **kwargs):
+    def __init__(self, model_class, delta_spot=0.02, delta_vol=0.02, delta_rf_rate=0.02,
+                 delta_time=1, delta_conv_yield=0, delta_cost_yield=0, **kwargs):
         self.model = model_class
         self._model = copy.deepcopy(self.model)
-        self.delta_spot = delta_spot or 0.02
-        self.delta_vol = delta_vol or 0.02
-        self.delta_rf_rate = delta_rf_rate or 0.02
-        self.delta_time = delta_time or 1
-        self.delta_conv_yield = delta_conv_yield or 0.02
-        self.delta_cost_yield = delta_cost_yield or 0.02
+        self.delta_spot = delta_spot or 0
+        self.delta_vol = delta_vol or 0
+        self.delta_rf_rate = delta_rf_rate or 0
+        self.delta_time = delta_time or 0
+        self.delta_conv_yield = delta_conv_yield or 0
+        self.delta_cost_yield = delta_cost_yield or 0
 
     def degree_one(self, var, change):
         up_model = copy.deepcopy(self._model)
@@ -83,6 +83,8 @@ class NumericalGreeks:
                 }
 
     def pnl(self, var, change):
+        if change == 0:
+            return 0
         up_model = copy.copy(self.model)
         if var == UnderlyingParameters.PRICEDATE.value:
             setattr(up_model, var, getattr(self.model, var) + pd.Timedelta(change, unit='D'))
@@ -91,11 +93,10 @@ class NumericalGreeks:
         return up_model.valuation() - self.model.valuation()
 
     def pnl_attribution(self):
-        print("analytical greek called")
         return {UnderlyingParameters.SPOT.value: self.pnl(UnderlyingParameters.SPOT.value, self.delta_spot)
                 , UnderlyingParameters.PRICEDATE.value: self.pnl(UnderlyingParameters.PRICEDATE.value, self.delta_time)
                 , UnderlyingParameters.VOLATILITY.value: self.pnl(UnderlyingParameters.VOLATILITY.value, self.delta_vol)
-                , UnderlyingParameters.RF_RATE.value: self.pnl(UnderlyingParameters.SPOT.value, self.delta_rf_rate)
+                , UnderlyingParameters.RF_RATE.value: self.pnl(UnderlyingParameters.RF_RATE.value, self.delta_rf_rate)
                 , UnderlyingParameters.CNV_YIELD.value: self.pnl(UnderlyingParameters.CNV_YIELD.value, self.delta_conv_yield)
                 , UnderlyingParameters.COST_YIELD.value: self.pnl(UnderlyingParameters.COST_YIELD.value, self.delta_cost_yield)
                 }

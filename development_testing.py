@@ -43,6 +43,9 @@ comOption2 = qbdp.ComOption(option_type='Call', strike=105, expiry_date='2019063
 # for option in option_list:
 #     print("Models available for pricing {} option are {}".format(option.undl, option.list_models()))
 
+print(eqOption1.engine.__doc__)
+
+
 eqOption1_pricer = eqOption1.engine(model="BSM", spot0=100, pricing_date='20180531', volatility=.25,
                                     rf_rate=.05, pv_div=0.0,
                                     yield_div=0.0, seed=12)
@@ -58,6 +61,9 @@ print(eqOption1_pricer.risk_parameters_num())
 OPTION1 = qbdp.OptionStr1Udl([(eqOption1, 1), (eqOption2, -1)])
 OPTION1_Pricer = OPTION1.engine(model="BSM", spot0=100, pricing_date='20180531', volatility=.25,
                                 rf_rate=.05, pv_div=0.0, yield_div=0.0, seed=12)
+
+test_plot = qbdp.Plotting(eqOption1_pricer,'pnl', x_axis_range=[50, 150]).line_plot()
+test_plot.show()
 # option_payoff = qbdp.Plotting(OPTION1, "payoff", x_axis_range=[0, 200]).line_plot()
 #
 # option_payoff.show()

@@ -6,7 +6,6 @@
 import numpy as np
 import copy
 import matplotlib
-matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 from .namesnmapper import UnderlyingParameters
@@ -24,17 +23,19 @@ class Plotting:
     :return: Graph of the func
     """
 
-    def __init__(self, instrument_object, func, x_axis=UnderlyingParameters.SPOT.value, x_axis_range=None):
+    def __init__(self, instrument_object, func, x_axis=UnderlyingParameters.SPOT.value, x_axis_range=None
+                 , no_of_points=50):
         self.object = instrument_object
         self.func = func
         self.x_axis = x_axis
         self.x_axis_range = x_axis_range
+        self.no_of_points = no_of_points
 
     def _x(self):
-        _temp_x = np.linspace(self.x_axis_range[0], self.x_axis_range[1], 50)
+        _temp_x = np.linspace(self.x_axis_range[0], self.x_axis_range[1], self.no_of_points)
         if not _temp_x[0]:
             _temp_x[0] += 0.001
-        return np.linspace(self.x_axis_range[0], self.x_axis_range[1], 50)
+        return np.linspace(self.x_axis_range[0], self.x_axis_range[1], self.no_of_points)
 
     def _get_set(self, _x_var):
         temp_object = copy.copy(self.object)
@@ -60,7 +61,7 @@ class Plotting:
         :return: matplotlib plot object
         """
         _x_axis = self._x()
-        _x_new = np.linspace(_x_axis[0], _x_axis[-1], 500)
+        _x_new = np.linspace(_x_axis[0], _x_axis[-1], self.no_of_points*10)
         _y_smooth = spline(_x_axis, self._y(), _x_new)
         plt.plot(_x_new, _y_smooth)
         plt.grid(True)
