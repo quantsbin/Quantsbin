@@ -111,23 +111,24 @@ class StdStrategies(OptionStr1Udl):
             asset = (String). Name of the asset class  e.g. "Stock"
             expiry_date = (Date in string format "YYYYMMDD") e.g. 10 Dec 2018 as "20181210"
             expiry_type = 'European' or 'American' (default is set to 'European')
-            strike = (Float). e.g. 110
-            spread = (Float). This is added or subtracted to strike based on the strategy e.g. 10
-            spot0 => (Float). e.g. 110
-            **kwargs =>  market parameters for PricingEngine (calculation of combined valuation and riskparameters)
+            low_strike = (Float) Strike for option with lowest strike e.g. 110
+            strike_spread = (Float). This is added or subtracted to strike based on the strategy e.g. 10
+            time_spread = time added to expiry in to find expiry of long term maturity option in calendar spread.
 
     List of Std. Strategies [bull_call, bear_call, bull_put, bear_put, box_spread, butterfly_call, butterfly_put,
                             calendar_call, calendar_put, rev_calendar_call, rev_calendar_put, bottom_straddle,
                             top_straddle, bottom_strangle, top_strangle, strip, strap]
     """
 
-    def __init__(self, name="bull_call", asset=None, expiry_date=None, expiry_type=None, low_strike=100, spread=10):
+    def __init__(self, name="bull_call", asset=None, expiry_date=None, expiry_type=None, low_strike=100,
+                 strike_spread=10, time_spread=30):
         self.name = name
         self.asset = asset or UdlType.STOCK.value
         self.expiry_date = expiry_date or None
         self.expiry_type = expiry_type or ExpiryType.EUROPEAN.value
         self.strike = low_strike or 100
-        self.spread = spread or (low_strike * 0.1)
+        self.spread = strike_spread or (low_strike * 0.1)
+        self.time_spread = time_spread or 30
         super().__init__(self.std_option_portfolio)
 
     @property
@@ -149,12 +150,12 @@ class StdStrategies(OptionStr1Udl):
 
     def before_option(self, option_type):
         return VANILLA_OBJECT_MAPPER[self.asset](option_type=option_type, strike=self.strike, expiry_date=
-                                                 self.expiry_date - timedelta(days=self.spread),
+                                                 self.expiry_date - timedelta(days=self.time_spread),
                                                  expiry_type=self.expiry_type)
 
     def after_option(self, option_type):
         return VANILLA_OBJECT_MAPPER[self.asset](option_type=option_type, strike=self.strike, expiry_date=
-                                                 self.expiry_date + timedelta(days=self.spread),
+                                                 self.expiry_date + timedelta(days=self.time_spread),
                                                  expiry_type=self.expiry_type)
 
     def bull_call(self):
