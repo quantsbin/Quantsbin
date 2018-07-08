@@ -100,6 +100,33 @@ class EqOption(VanillaOption):
 
     def engine(self, model=None, spot0=None, rf_rate=0, yield_div=0, div_list=None, volatility=None,
                pricing_date=None, **kwargs):
+        """
+        Binds pricing model class and market data to the object
+            Args required:
+                Core Arguments:
+                    model: pricing model (default value set to BSM for European expiry)
+                           To check available list of models use print(option_object.list_models())
+                    fwd0: (float) current underlying price/value e.g. 110.0
+                    rf_rate: (Float < 1) risk free continuously compounded discount rate e.g. 5% as 0.05
+                    volatility: (Float < 1) Underlying price/value return annualized volatility.
+                                Volatility in decimal e.g. Volatility of 10% => 0.10
+                    pricing_Date: Date on which option value need to be calculated.
+                                  (Date in string format "YYYYMMDD") e.g. 10 Dec 2018 as "20181210".
+                    yield_div: (Float < 1) div yield continuously compounded (for index options) e.g. 5% as 0.05
+                    div_list: List of tuples for discrete dividends with dates. e.g. [("20180610", 2), ("20180624", 4)]
+                              [("Date", div amount),...]
+                Model specific arguments:
+                    MonteCarlo
+                        no_of_path = (Integer). Number of paths to be generated for simulation e.g. 10000
+                        no_of_steps = (Integer). Number of steps(nodes) for the premium calculation e.g. 100
+                        seed = (Integer). Used for seeding
+                        antithetic = (Boolean). A variance reduction process in Montecarlo Simulation.
+                                     Default False
+                    Binomial
+                        no_of_steps = (Integer). Number of steps (nodes) for the premium calculation.
+                                       Maximum value accepted is 100. This limit will be increased
+                                       in future release.
+                """
         return super().engine(model=model, spot0=spot0, rf_rate=rf_rate, cnv_yield=yield_div, pv_cnv=0,
                               div_list=div_list, volatility=volatility, pricing_date=pricing_date, **kwargs)
 
@@ -122,6 +149,30 @@ class FutOption(VanillaOption):
         self.undl = UdlType.FUTURES.value
 
     def engine(self, model=None, fwd0=None, rf_rate=0, volatility=None, pricing_date=None, **kwargs):
+        """
+        Binds pricing model class and market data to the object
+            Args required:
+                Core Arguments:
+                    model: pricing model (default value set to BSM for European expiry)
+                           To check available list of models use print(option_object.list_models())
+                    fwd0: (float) current future price quote e.g. 110.0
+                    rf_rate: (Float < 1) risk free continuously compounded discount rate e.g. 5% as 0.05
+                    volatility: (Float < 1) Underlying price/value return annualized volatility.
+                                Volatility in decimal e.g. Volatility of 10% => 0.10
+                    pricing_Date: Date on which option value need to be calculated.
+                                  (Date in string format "YYYYMMDD") e.g. 10 Dec 2018 as "20181210".
+                Model specific arguments:
+                    MonteCarlo
+                        no_of_path = (Integer). Number of paths to be generated for simulation e.g. 10000
+                        no_of_steps = (Integer). Number of steps(nodes) for the premium calculation e.g. 100
+                        seed = (Integer). Used for seeding
+                        antithetic = (Boolean). A variance reduction process in Montecarlo Simulation.
+                                     Default False
+                    Binomial
+                        no_of_steps = (Integer). Number of steps (nodes) for the premium calculation.
+                                       Maximum value accepted is 100. This limit will be increased
+                                       in future release.
+        """
         return super().engine(model=model, spot0=fwd0, rf_rate=rf_rate, cnv_yield=rf_rate,
                               volatility=volatility, pricing_date=pricing_date, **kwargs)
 
@@ -145,7 +196,34 @@ class FXOption(VanillaOption):
 
     def engine(self, model=None, spot0=None, rf_rate_local=0, rf_rate_foreign=0, volatility=None,
                pricing_date=None, **kwargs):
-        return super().engine(model=model, spot0=spot0, rf_rate_local=rf_rate_local, rf_rate_foreign=rf_rate_foreign,
+        """
+        Binds pricing model class and market data to the object
+            Args required:
+                Core Arguments:
+                    model: pricing model (default value set to BSM for European expiry)
+                           To check available list of models use print(option_object.list_models())
+                    spot0: (float) current underlying price/value e.g. 110.0
+                    rf_rate_local: (Float < 1) risk free continuously compounded discount rate of local currency
+                                    e.g. 5% as 0.05
+                    rf_rate_foreign: (Float < 1) risk free continuously compounded discount rate of
+                                    foreign currency e.g. 5% as 0.05
+                    volatility: (Float < 1) Underlying price/value return annualized volatility.
+                                Volatility in decimal e.g. Volatility of 10% => 0.10
+                    pricing_Date: Date on which option value need to be calculated.
+                                  (Date in string format "YYYYMMDD") e.g. 10 Dec 2018 as "20181210".
+                Model specific arguments:
+                    MonteCarlo
+                        no_of_path = (Integer). Number of paths to be generated for simulation e.g. 10000
+                        no_of_steps = (Integer). Number of steps(nodes) for the premium calculation e.g. 100
+                        seed = (Integer). Used for seeding
+                        antithetic = (Boolean). A variance reduction process in Montecarlo Simulation.
+                                     Default False
+                    Binomial
+                        no_of_steps = (Integer). Number of steps (nodes) for the premium calculation.
+                                       Maximum value accepted is 100. This limit will be increased
+                                       in future release.
+        """
+        return super().engine(model=model, spot0=spot0, rf_rate=rf_rate_local, cnv_yield=rf_rate_foreign,
                               volatility=volatility, pricing_date=pricing_date, **kwargs)
 
 
@@ -167,5 +245,31 @@ class ComOption(VanillaOption):
 
     def engine(self, model=None, spot0=None, rf_rate=0, cnv_yield=0, cost_yield=0, volatility=None,
                pricing_date=None, **kwargs):
+        """
+        Binds pricing model class and market data to the object
+            Args required:
+                Core Arguments:
+                    model: pricing model (default value set to BSM for European expiry)
+                           To check available list of models use print(option_object.list_models())
+                    spot0: (float) current underlying price/value e.g. 110.0
+                    rf_rate: (Float < 1) risk free continuously compounded discount rate e.g. 5% as 0.05
+                    cnv_yield: (Float < 1) Convenience yield continuously compounded e.g. 4% as 0.04
+                    cost_yield: (Float < 1) Cost yield continuously compounded e.g. 2% as 0.02
+                    volatility: (Float < 1) Underlying price/value return annualized volatility.
+                                Volatility in decimal e.g. Volatility of 10% => 0.10
+                    pricing_Date: Date on which option value need to be calculated.
+                                  (Date in string format "YYYYMMDD") e.g. 10 Dec 2018 as "20181210".
+                Model specific arguments:
+                    MonteCarlo
+                        no_of_path = (Integer). Number of paths to be generated for simulation e.g. 10000
+                        no_of_steps = (Integer). Number of steps(nodes) for the premium calculation e.g. 100
+                        seed = (Integer). Used for seeding
+                        antithetic = (Boolean). A variance reduction process in Montecarlo Simulation.
+                                     Default False
+                    Binomial
+                        no_of_steps = (Integer). Number of steps (nodes) for the premium calculation.
+                                       Maximum value accepted is 100. This limit will be increased
+                                       in future release.
+        """
         return super().engine(model=model, spot0=spot0, rf_rate=rf_rate, cnv_yield=cnv_yield, cost_yield=cost_yield,
                               volatility=volatility, pricing_date=pricing_date, **kwargs)

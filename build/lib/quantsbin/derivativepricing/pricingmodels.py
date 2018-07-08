@@ -309,7 +309,9 @@ class MonteCarloGBM(Model):
             return self._no_of_path
         else:
             if self.instrument.expiry_type == ExpiryType.EUROPEAN.value:
-                return 10000000
+                if self.div_list:
+                    return 10000
+                return 1000000
             elif self.instrument.expiry_type == ExpiryType.AMERICAN.value:
                 return 10000
 
@@ -370,6 +372,9 @@ class MonteCarloGBM(Model):
 
     def valuation(self):
         if self.instrument.expiry_type == ExpiryType.EUROPEAN.value:
+            if self.div_list:
+                return np.average(self.option_payoff(self.stimulation_method()[:, -1])
+                                  * (e ** (-1 * self.rf_rate * self.maturity)))
             return np.average(self.option_payoff(self.stimulation_method()) * e ** (-1 * self.rf_rate * self.maturity))
         elif self.instrument.expiry_type == ExpiryType.AMERICAN.value:
             return self.LSM_model()
@@ -389,7 +394,7 @@ class BinomialModel(Model):
         cost_yield = (Float < 1) e.g. 0.2
         volatility = (Float < 1) e.g. 0.25
         pricing_date = (Date in string format "YYYYMMDD") e.g. 10 Dec 2018 as "20181210"
-        no_of_steps = (Integer). Number of steps (nodes) for the premium calculation e.g. 100
+            no_of_steps = (Integer). Number of steps (nodes) for the premium calculation e.g. 100
         div_list = (List). list of tuples with Ex-Dates and Dividend amounts. e.g. [('20180625',0.2),('20180727',0.6)]
 
     """

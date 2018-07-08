@@ -20,7 +20,7 @@ except(IOError, ImportError):
 
 setup(
     name='Quantsbin',
-    version='1.0.a',
+    version='1.0.2',
     description='Quantitative Finance Tools',
     long_description=long_description,
     long_description_content_type='text/markdown',

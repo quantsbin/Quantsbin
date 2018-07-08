@@ -13,7 +13,7 @@ class PricingEngine:
     """
 
     def __init__(self, instrument, model, **kwargs):
-        self._instrument = instrument
+        self.instrument = instrument
         self._model = model
         self._other_args = kwargs
         self.check_model = self.model_check()
@@ -26,7 +26,7 @@ class PricingEngine:
                 model: pricing model given as argument or the default value(default value set to BSM for European expiry)
                 **kwargs: Dictionary of parameters and their corresponding value required for valuation
         """
-        return MODEL_MAPPER[self._model](self._instrument, **self._other_args)
+        return MODEL_MAPPER[self._model](self.instrument, **self._other_args)
 
     def model_check(self):
         """
@@ -34,7 +34,7 @@ class PricingEngine:
             Args required:
                 self.model: property defined in engineconfig module under Pricing Engine class
         """
-        assert self._model in OBJECT_MODEL[self._instrument.undl][self._instrument.expiry_type], \
+        assert self._model in OBJECT_MODEL[self.instrument.undl][self.instrument.expiry_type], \
             "Model not valid please check available models using option.list_models()"
         return True
 
