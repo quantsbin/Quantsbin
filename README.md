@@ -1,3 +1,5 @@
+[![PyPi version](https://img.shields.io/pypi/v/quantsbin.svg?maxAge=60)](https://pypi.python.org/pypi/pandas-montecarlo) [![PyPi Status](https://img.shields.io/pypi/status/quantsbin.svg?maxAge=60)](https://pypi.python.org/pypi/quantsbin) [![Github Stars](https://img.shields.io/github/stars/quantsbin/Quantsbin.svg?style=social&label=Star&maxAge=60)](https://github.com/quantsbin/Quantsbin) [![Twitter follows](https://img.shields.io/twitter/follow/quantsbin.svg?style=social&label=Follow%20Me&maxAge=60)](https://twitter.com/quantsbin) 
+
 # Quantsbin
 
 Open source library for finance.
