@@ -28,5 +28,9 @@ setup(
     author_email='contactus@quantsbin.com',
     url='https://github.com/quantsbin/Quantsbin',
     packages=['quantsbin', 'quantsbin.derivativepricing', 'quantsbin.montecarlo'],
-    license='MIT'
+    license='MIT',
+    classifiers=[ 'Development Status :: 3 - Beta', 
+                  'Programming Language :: Python :: 3.4',
+                  'Programming Language :: Python :: 3.5',
+                  'Programming Language :: Python :: 3.6']
     )
