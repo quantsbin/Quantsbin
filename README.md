@@ -41,13 +41,13 @@ Install using pip:
 ```
 
 ## Detailed documentation
-Refer to our [Documentation](http://www.quantsbin.com/documentation/) page
+Refer to our [Documentation](http://www.quantsbin.com/introduction-to-option-pricing-using-python-library-quantsbin/) page
 
 ## Our Website
 For collaboration and suggestion reach us at [Quantsbin](http://www.quantsbin.com/)
 
 ## Tutorial
-Refer to our [Tutorial](https://quantsbin.wordpress.com/2018/07/05/introduction-to-options-and-option-pricing-using-python-open-source-library-quantsbin/) page
+Refer to our [Tutorial](http://www.quantsbin.com/introduction-to-option-pricing-using-python-library-quantsbin/) page
 
 ## Note
 For Quantsbin 1.0.2 testing and documentation are still WIP.
