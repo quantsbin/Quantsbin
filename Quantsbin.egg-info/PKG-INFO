@@ -6,7 +6,9 @@ Home-page: https://github.com/quantsbin/Quantsbin
 Author: Quantsbin
 Author-email: contactus@quantsbin.com
 License: MIT
-Description: # Quantsbin
+Description: [![PyPi version](https://img.shields.io/pypi/v/quantsbin.svg?maxAge=60)](https://pypi.python.org/pypi/pandas-montecarlo) [![PyPi Status](https://img.shields.io/pypi/status/quantsbin.svg?maxAge=60)](https://pypi.python.org/pypi/quantsbin) [![Github Stars](https://img.shields.io/github/stars/quantsbin/Quantsbin.svg?style=social&label=Star&maxAge=60)](https://github.com/quantsbin/Quantsbin) [![Twitter follows](https://img.shields.io/twitter/follow/quantsbin.svg?style=social&label=Follow%20Me&maxAge=60)](https://twitter.com/quantsbin) 
+        
+        # Quantsbin
         
         Open source library for finance.
         
@@ -47,16 +49,20 @@ Description: # Quantsbin
         ```
         
         ## Detailed documentation
-        Refer to our [Documentation](http://www.quantsbin.com/documentation/) page
+        Refer to our [Documentation](http://www.quantsbin.com/introduction-to-option-pricing-using-python-library-quantsbin/) page
         
         ## Our Website
         For collaboration and suggestion reach us at [Quantsbin](http://www.quantsbin.com/)
         
         ## Tutorial
-        Refer to our [Tutorial](https://quantsbin.wordpress.com/2018/07/05/introduction-to-options-and-option-pricing-using-python-open-source-library-quantsbin/) page
+        Refer to our [Tutorial](http://www.quantsbin.com/introduction-to-option-pricing-using-python-library-quantsbin/) page
         
         ## Note
         For Quantsbin 1.0.2 testing and documentation are still WIP.
         
 Platform: UNKNOWN
+Classifier: Development Status :: 3 - Beta
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
 Description-Content-Type: text/markdown
