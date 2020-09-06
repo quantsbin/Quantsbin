@@ -9,7 +9,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 from .namesnmapper import UnderlyingParameters
-from scipy.interpolate import spline
+from scipy.interpolate import interp1d
 
 
 class Plotting:
@@ -62,7 +62,9 @@ class Plotting:
         """
         _x_axis = self._x()
         _x_new = np.linspace(_x_axis[0], _x_axis[-1], self.no_of_points*10)
-        _y_smooth = spline(_x_axis, self._y(), _x_new)
+        # _y_smooth = spline(_x_axis, self._y(), _x_new)
+        f = interp1d(_x_axis, self._y(), kind='cubic')
+        _y_smooth = f(_x_new)
         plt.plot(_x_new, _y_smooth)
         plt.grid(True)
         plt.xlabel(str(self.x_axis).capitalize())
