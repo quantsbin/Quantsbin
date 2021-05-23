@@ -1,0 +1,13 @@
+#pycharm
+__pycache__/
+.idea/
+
+#vscode
+.vscode/
+
+#jupyter notebooks
+.ipynb_checkpoints
+
+#internal test file
+development_testing.py
+
